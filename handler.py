@@ -19,6 +19,7 @@ def handler(job):
     decode_base64_to_video(vid_base64,infile)
     main(infile,style,outfile)
     encoded_frames=encode_video_to_base64(outfile)
+    print('finished')
     return encoded_frames
 
 
