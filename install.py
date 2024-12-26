@@ -1,6 +1,6 @@
 import os
 from subprocess import PIPE, run
-
+print('installing')
 
 def download_model():
     path = './deps/Rerender_A_Video/models'
