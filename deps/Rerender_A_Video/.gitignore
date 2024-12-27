@@ -117,7 +117,7 @@ venv.bak/
 work_dirs/
 
 # Pytorch
-*.pth
+#*.pth
 
 # onnx and tensorrt
 *.onnx
