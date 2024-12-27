@@ -14,7 +14,7 @@ def handler(job):
     print(job_input)
     vid_base64 = job_input.get('video',None)
 
-    style = job_input.get('style','Ryo Takemas')
+    style = job_input.get('style','ghibli')
     infile='input.mp4'
     outfile='out.mp4'
 
