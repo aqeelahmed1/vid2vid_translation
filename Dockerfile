@@ -19,5 +19,5 @@ COPY . /content
 WORKDIR /content
 RUN python install.py --default-timeout=100
 RUN python handler.py --default-timeout=100
-
+RUN pip install -q numba
 CMD python handler.py
