@@ -19,8 +19,10 @@ def handler(job):
     outfile='out.mp4'
 
     if vid_base64 is not None:
+        print('decoding')
         decode_base64_to_video(vid_base64,infile)
         main(infile,style,outfile)
+        print('finished main')
         encoded_frames=encode_video_to_base64(outfile)
         print('finished')
         return encoded_frames
