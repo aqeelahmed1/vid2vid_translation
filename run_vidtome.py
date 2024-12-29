@@ -87,28 +87,31 @@ def handler(job):
     # Update parameters and save
     yaml_file='configs/user.yaml'
     # updated_params = update_params_from_json(default_params, job_input)
-    save_to_yaml(job_input, yaml_file)
+    if "video_encoding" in job_input:
+        save_to_yaml(job_input, yaml_file)
 
-    print(f"Updated parameters saved to '{yaml_file}'")
-    decode_base64_to_video(job_input["video_encoding"],job_input["input_path"])
-    del job_input["video_encoding"]
+        print(f"Updated parameters saved to '{yaml_file}'")
+        decode_base64_to_video(job_input["video_encoding"],job_input["input_path"])
+        del job_input["video_encoding"]
 
-    config = load_config(yaml_file)
-    pipe, scheduler, model_key = init_model(
-        config.device, config.sd_version, config.model_key, config.generation.control, config.float_precision)
-    config.model_key = model_key
-    seed_everything(config.seed)
-    
-    print("Start inversion!")
-    inversion = Inverter(pipe, scheduler, config)
-    inversion(config.input_path, config.inversion.save_path)
+        config = load_config(yaml_file)
+        pipe, scheduler, model_key = init_model(
+            config.device, config.sd_version, config.model_key, config.generation.control, config.float_precision)
+        config.model_key = model_key
+        seed_everything(config.seed)
 
-    print("Start generation!")
-    generator = Generator(pipe, scheduler, config)
-    frame_ids = get_frame_ids(
-        config.generation.frame_range, config.generation.frame_ids)
-    path=generator(config.input_path, config.generation.latents_path,
-              config.generation.output_path, frame_ids=frame_ids)
-    enc_out_vid=encode_video_to_base64(path)
-    return enc_out_vid
+        print("Start inversion!")
+        inversion = Inverter(pipe, scheduler, config)
+        inversion(config.input_path, config.inversion.save_path)
+
+        print("Start generation!")
+        generator = Generator(pipe, scheduler, config)
+        frame_ids = get_frame_ids(
+            config.generation.frame_range, config.generation.frame_ids)
+        path=generator(config.input_path, config.generation.latents_path,
+                  config.generation.output_path, frame_ids=frame_ids)
+        enc_out_vid=encode_video_to_base64(path)
+        return enc_out_vid
+    else:
+        return {"test":"passed"}
 runpod.serverless.start({"handler": handler})
