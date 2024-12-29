@@ -12,12 +12,12 @@ RUN adduser --disabled-password --gecos '' camenduru && \
     apt update -y && add-apt-repository -y ppa:git-core/ppa && apt update -y && apt install -y aria2 git git-lfs unzip ffmpeg
 
 USER camenduru
-
-RUN pip install -q clip-interrogator==0.5.4 controlnet-aux==0.0.7 diffusers==0.25.0 open-clip-torch==2.24.0 \
-    transformers==4.26.1 accelerate==0.26.1 runpod huggingface_hub==0.25.2
 COPY . /content
 WORKDIR /content
-RUN python install.py --default-timeout=100
-RUN python handler.py --default-timeout=100
-RUN pip install -q numba
-CMD python handler.py
+
+RUN pip install -r requirement.txt
+
+# RUN python install.py --default-timeout=100
+RUN python run_vidtome.py --default-timeout=100
+# RUN pip install -q numba
+CMD python run_vidtome.py
