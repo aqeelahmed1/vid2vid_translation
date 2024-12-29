@@ -1,7 +1,7 @@
 from invert import Inverter
 from generate import Generator
 from utils import load_config, init_model, seed_everything, get_frame_ids
-import config_path
+# import config_path
 import runpod
 from utils import encode_video_to_base64,decode_base64_to_video
 import yaml
@@ -86,10 +86,13 @@ def handler(job):
     job_input = job['input']
     # Update parameters and save
     yaml_file='configs/user.yaml'
-    updated_params = update_params_from_json(default_params, job_input)
-    save_to_yaml(updated_params, yaml_file)
+    # updated_params = update_params_from_json(default_params, job_input)
+    save_to_yaml(job_input, yaml_file)
+
     print(f"Updated parameters saved to '{yaml_file}'")
-    decode_base64_to_video(updated_params["video_encoding"],updated_params["input_path"])
+    decode_base64_to_video(job_input["video_encoding"],job_input["input_path"])
+    del job_input["video_encoding"]
+
     config = load_config(yaml_file)
     pipe, scheduler, model_key = init_model(
         config.device, config.sd_version, config.model_key, config.generation.control, config.float_precision)

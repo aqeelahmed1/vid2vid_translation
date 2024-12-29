@@ -15,7 +15,7 @@ USER camenduru
 COPY . /content
 WORKDIR /content
 
-RUN pip install -r requirement.txt
+RUN pip install -r requirements.txt
 
 # RUN python install.py --default-timeout=100
 RUN python run_vidtome.py --default-timeout=100
