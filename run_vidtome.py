@@ -71,18 +71,7 @@ def save_to_yaml(params, yaml_file):
         yaml.dump(params, f, default_flow_style=False)
 
 
-# # Input JSON file and output YAML file
-# json_file = "updates.json"
-# yaml_file = "parameters.yaml"
-
-# Update parameters and save
-# updated_params = update_params_from_json(default_params, json_file)
-# save_to_yaml(updated_params, yaml_file)
-# print(f"Updated parameters saved to '{yaml_file}'")
-
-
 def handler(job):
-    print('==start===')
     job_input = job['input']
     # Update parameters and save
     yaml_file='configs/user.yaml'
